@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,21 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/challenges")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ChallengeController {
-    private ChallengeServer challengeServer;
+    private ChallengeService challengeService;
 
-    public ChallengeController(ChallengeServer challengeServer) {
-        this.challengeServer = challengeServer;
+    public ChallengeController(ChallengeService challengeServer) {
+        this.challengeService = challengeServer;
     }
 
     @GetMapping
     public ResponseEntity<List<Challenge>> getAllChallenges() {
-        return  new ResponseEntity<>(challengeServer.getAllChallenges(), HttpStatus.OK);
+        return  new ResponseEntity<>(challengeService.getAllChallenges(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<String> addChallenge(@RequestBody Challenge challenge) {
-        boolean isChallengeAdded = challengeServer.addChallenge(challenge);
+        boolean isChallengeAdded = challengeService.addChallenge(challenge);
 
         if (isChallengeAdded) {
             return new ResponseEntity<>("Challenge added successfully!", HttpStatus.CREATED);
@@ -40,7 +42,7 @@ public class ChallengeController {
 
     @GetMapping("/{month}")
     public ResponseEntity<Challenge> getChallenge(@PathVariable String month) {
-        Challenge challenge = challengeServer.getChallenges(month);
+        Challenge challenge = challengeService.getChallenges(month);
         if(challenge != null) {
             return new ResponseEntity<>(challenge, HttpStatus.OK);
         }
@@ -49,7 +51,7 @@ public class ChallengeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateChallenge(@PathVariable Long id, @RequestBody Challenge updatedChallenge) {
-        boolean isUpdated = challengeServer.updateChallenge(id, updatedChallenge);
+        boolean isUpdated = challengeService.updateChallenge(id, updatedChallenge);
         if (isUpdated) {
             return new ResponseEntity<>("Challenge updated successfully!", HttpStatus.OK);
         } else {
@@ -59,7 +61,7 @@ public class ChallengeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable Long id) {
-        boolean isDeleted = challengeServer.deleteChallenge(id);
+        boolean isDeleted = challengeService.deleteChallenge(id);
         if (isDeleted) {
             return new ResponseEntity<>("Challenge deleted successfully!", HttpStatus.OK);
         } else {
