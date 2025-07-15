@@ -2,14 +2,10 @@ import Challenge from "./Challenge"
 
 function ChallengeList({ challenges }) {
     return (
-        <div>
-            <ul>
+        <div class="list-group">
                 {challenges.map(challenge => (
-                    <li key={challenge.id}>
-                        <Challenge challenge={challenge}></Challenge>
-                    </li>
+                    <Challenge key={challenge.id} challenge={challenge}></Challenge>
                 ))}
-            </ul>
         </div>
     )
 }
