@@ -40,6 +40,11 @@ public class ChallengeController {
         }
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello, welcome to the Challenge App!";
+    }
+
     @GetMapping("/{month}")
     public ResponseEntity<Challenge> getChallenge(@PathVariable String month) {
         Challenge challenge = challengeService.getChallenges(month);
