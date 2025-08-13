@@ -21,24 +21,11 @@ function App() {
     fetchChallenges();
   }, [])
 
-  const handleChallengeAdded = () => {
-    fetchChallenges() ;
-  } 
-
-  const handleChallengeDeleted = async (challengeId) => {
-    try {
-      await axios.delete(`http://localhost:8080/challenges/${challengeId}`);
-      fetchChallenges(); // Refresh danh sách sau khi xóa
-    } catch (error) {
-      console.error('Error deleting challenge:', error);
-    }
-  }
-
   return (
     <div className='center container-fluid mt-5'>
       <h1 className='text-center mb-4'>Monthly Challenges</h1>
-      <AddChallenge onChallengeAddded={handleChallengeAdded}/>
-      <ChallengeList challenges={challenges} onChallengeDeleted={handleChallengeDeleted}/>
+      <AddChallenge onChallengeAddded={fetchChallenges}/>
+      <ChallengeList challenges={challenges} onChallengeDeleted={fetchChallenges}/>
     </div>
   )
 }
