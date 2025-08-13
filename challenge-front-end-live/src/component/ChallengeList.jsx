@@ -1,10 +1,10 @@
 import Challenge from "./Challenge"
 
-function ChallengeList({ challenges }) {
+function ChallengeList({ challenges, onChallengeDeleted }) {
     return (
-        <div class="list-group">
+        <div className="list-group">
                 {challenges.map(challenge => (
-                    <Challenge key={challenge.id} challenge={challenge}></Challenge>
+                    <Challenge key={challenge.id} challenge={challenge} onChallengeDeleted={onChallengeDeleted}></Challenge>
                 ))}
         </div>
     )
